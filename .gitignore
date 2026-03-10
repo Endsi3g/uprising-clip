@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+content-engine-web/.next/
+content-engine-web/out/
+
+# Env
+.env
+.env.local
+.env.*.local
+worker/.env
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Supabase
+.supabase/
+
+# Python
+worker/__pycache__/
+worker/.venv/
+*.pyc

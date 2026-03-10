@@ -1,0 +1,209 @@
+# Design System – Clone UI Opus Clip
+
+Objectif : reproduire au plus proche l’UI d’Opus Clip pour Uprising Clip (layout, navigation, couleurs, typographie, composants), en restant techniquement simple à implémenter (Next.js + Tailwind + shadcn UI).
+
+---
+
+## 1. Layout global
+
+### 1.1. Structure de page
+
+- **Sidebar verticale gauche**
+  - Fond sombre plein (noir/gris très foncé).
+  - Icônes mono (home, grid/projets, fichiers, calendrier, analytics, liens, crown, aide…).
+  - Icônes centrées avec hover clair (cercle ou carré arrondi léger).
+  - Avatar/profil en haut, icône “?” ou aide en bas.
+
+- **Topbar droite**
+  - Alignée à droite : notifications, compteur de crédits, bouton “Ajouter plus de crédits”.
+  - Titre de page en haut à gauche (“Analytics”, “Calendrier”, “Modèle de marque”, etc.).
+  - Mention “Beta” en tag pill pour les features en bêta (ex: Analytics).
+
+- **Contenu principal**
+  - Fond global noir/gris très foncé (#050509 / #05060A approx).
+  - Cards et panneaux sur un fond gris très foncé légèrement plus clair.
+  - Utilisation intensive du *centered panel* (modales/panels flottants au centre avec background blur léger).
+
+---
+
+## 2. Navigation & sections (d’après les captures)
+
+### 2.1. Menu profil / comptes
+
+- Menu déroulant depuis l’avatar :
+  - Section “Accounts”.
+  - Lien “Create a team (Pro)” avec badge **Pro**.
+  - Items “OpusClip Captions (Free)”, “OpusClip Thumbnail (Free)” avec badge **Free**.
+  - Lien “Credit usage history”.
+  - “Logout”.
+
+**À implémenter :**
+- Dropdown `UserMenu` avec:
+  - `SectionTitle` “Accounts”.
+  - `MenuItem` + `Badge` (variant “outline” ou “solid”).
+
+---
+
+### 2.2. Dashboard principal (conversion long → shorts)
+
+- Bloc central upload :
+  - Input texte “Déposez un lien Zoom”.
+  - Boutons “Télécharger”, “Google Drive”.
+  - CT principal “Obtenir des clips en 1 clic”.
+- Ligne d’icônes circulaires pour fonctionnalités :
+  - “Conversion long format en shorts”
+  - “IA Sous-titres”
+  - “Éditeur vidéo”
+  - “Amélioration vocale”
+  - “IA Reframe”
+  - “IA B-Roll”
+  - “IA hook”
+- Section “Tous les projets / Projets sauvegardés” avec cards horizontales de projets démo.
+
+**À implémenter :**
+- Composant `HeroUploadPanel` avec:
+  - Input + boutons alignés en colonne.
+  - Row d’icônes ronds (Tailwind: `flex gap-4`, `rounded-full bg-slate-900`).
+
+---
+
+### 2.3. Calendrier (Planification)
+
+- Titre “Calendrier”.
+- Boutons en haut :
+  - “Planifier une publication”
+  - “Télécharger une vidéo locale”
+- Vue calendrier mensuelle full width :
+  - Cases jours fond sombre, léger highlight pour le jour sélectionné.
+  - Timezone en haut à droite (ex: `GMT-04`).
+
+**À implémenter :**
+- Utiliser un composant calendar (radix/shadcn) custom, 7 colonnes, 5-6 lignes.
+- Tailwind : `border border-slate-800` pour les cases, `bg-slate-950` pour le fond.
+
+---
+
+### 2.4. Analytics
+
+- Header :
+  - “Analytics (Beta)” + info “Currently only available for TikTok and YouTube accounts”.
+  - Filtres à droite : `Last 7 days`, `Filtering by`.
+- Graph:
+  - Zone centrale line chart “Account views”.
+  - Checkbox “Posted through OpusClip”.
+- Section “Audience Insights” en dessous :
+  - Plusieurs petites cards “Aggregated views” etc. avec message “Advanced analytics coming soon”.
+
+**À implémenter :**
+- Layout chart full width container (div avec hauteur ~320px, fond plus clair).
+- Cards insight : `rounded-xl bg-slate-900 px-4 py-3`.
+
+---
+
+### 2.5. Brand Model / Modèle de marque
+
+- Layout split:
+  - Colonne gauche : panel “Paramètres” avec sections:
+    - Style (paramètres de mise en page 9:16, sous-titre (font, taille)).
+    - Marque (superposition logo, intro/outro, musique).
+    - AI (toggle supprimer mots de remplissage, pauses, surlignage mots-clés, emojis, transitions).
+  - Colonne droite : preview verticale 9:16 (phone-like) centré.
+
+**À implémenter :**
+- Layout `grid grid-cols-[320px_1fr] gap-8`.
+- Panneau gauche : `Sticky` sur hauteur viewport pour UX stable.
+- Toggles avec style pill + cercle (type iOS switch sombres).
+
+---
+
+## 3. Palette de couleurs & thèmes
+
+### 3.1. Couleurs approximatives
+
+- Fond global : `#050509` / `#05060A`
+- Panels : `#0B0C10` / `#101119`
+- Bordures : `#1E293B` (gris-bleu très sombre)
+- Texte principal : `#F9FAFB` (presque blanc)
+- Texte secondaire : `#9CA3AF`
+- Accent primaire : jaune/or (pour crédits) et bleu/violet pour boutons principaux.
+- Survol : éclaircissement très léger du panel.
+
+**À faire :**
+- Définir un thème Tailwind:
+  - `bg-body`, `bg-elevated`, `border-subtle`, `text-primary`, `text-muted`, `accent`.
+
+---
+
+## 4. Typographie & style
+
+- Police : style sans-serif moderne (équivalent Inter, SF Pro ou General Sans).
+- Titre pages : taille grande (text-2xl à 3xl), gras.
+- Labels / légendes : uppercase petite taille, letter-spacing léger.
+- Le ton visuel : sobre, productif, très “SaaS pro”.
+
+---
+
+## 5. Composants à cloner
+
+### 5.1. Sidebar
+
+- Largeur fixe (~72px).
+- Icônes centrées verticalement.
+- État actif : fond légèrement plus clair + barre sur le côté.
+- Tooltips au hover.
+
+### 5.2. Topbar
+
+- Alignement à droite: notifications, compteur crédits (icône éclair), bouton “Ajouter plus de crédits”.
+- Badge crédit : petit compteur numéroté à fond jaune/or.
+
+### 5.3. Cards & panels
+
+- Cards projets:
+  - Image miniature full width.
+  - Badge “Forfait Gratuito / Demo” en haut à gauche.
+  - Titre et sous-titre en dessous.
+
+- Panels centraux (modales, sélecteurs de comptes sociaux):
+  - Fond gris foncé, arrondis (radius 16px).
+  - Shadow doux + léger blur de fond.
+
+---
+
+## 6. Interactions & micro‑UX
+
+- Hover sur boutons : augmentation légère de brightness, pas de gros changement.
+- Animations discrètes (transition 150–200ms).
+- Dropdowns :
+  - fond très sombre, bordure subtile.
+- Checkbox/Toggle :
+  - formes arrondies, couleurs vertes ou bleues quand activé.
+
+---
+
+## 7. Implémentation technique (Next.js + Tailwind)
+
+### 7.1. Structure des composants
+
+```txt
+components/
+  layout/
+    AppShell.tsx       # Sidebar + topbar + main content
+    Sidebar.tsx
+    Topbar.tsx
+  dashboard/
+    HeroUploadPanel.tsx
+    ProjectCard.tsx
+  analytics/
+    AnalyticsChart.tsx
+    InsightsCards.tsx
+  calendar/
+    CalendarView.tsx
+  brand/
+    BrandSettingsPanel.tsx
+    BrandPreview.tsx
+  shared/
+    Badge.tsx
+    PillToggle.tsx
+    IconButton.tsx
+    DropdownMenu.tsx

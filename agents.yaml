@@ -1,0 +1,88 @@
+version: "1"
+project: "Uprising Clip / AICoFounder"
+orchestration: hierarchical  # Planificateur délègue aux autres
+
+contexts:
+  # Grandes familles de projets ciblés par ton studio
+  - id: cofounder_ai
+    description: "Cofondateur IA pour entrepreneurs (idéation, plan, exécution, copilote business)."
+    primary_stack: ["Next.js", "React", "TypeScript", "Supabase", "Python (si besoin)"]
+  - id: prospecting_app
+    description: "Apps de prospection B2B (scraping autorisé, séquences, CRM léger, agents sales)."
+    primary_stack: ["Next.js", "React", "Supabase", "Edge Functions", "Vercel"]
+  - id: trading_dashboard
+    description: "Dashboards trading/data (APIs marchés, signaux, monitoring temps réel)."
+    primary_stack: ["Next.js", "React", "Supabase", "WebSockets/Realtime"]
+
+agents:
+  planificateur:
+    name: "Agent Planificateur"
+    description: >
+      Analyse les besoins business, produit et techniques pour Uprising Clip / AICoFounder,
+      rédige la spec fonctionnelle, définit l'architecture (UI/UX, backend, base de données)
+      et construit une roadmap découpée en phases livrables.
+    triggers: ["nouveau_projet", "refonte_majeure", "pivot", "MVP_from_scratch"]
+    outputs:
+      - "docs/spec-fonctionnelle.md"
+      - "docs/architecture.md"
+      - "docs/roadmap.md"
+
+  chercheur:
+    name: "Agent Rechercheur"
+    description: >
+      Explore en lecture seule la codebase, la documentation (Supabase, Groq, Vercel, Google Workspace, etc.)
+      et les concurrents pour proposer les meilleures approches sans modifier le code.
+    readonly: true
+    triggers: ["avant_implémentation", "choix_api", "benchmark_concurrence"]
+    tools: ["codebase_search", "web_search", "read_file"]
+    outputs:
+      - "docs/recherche-technique.md"
+      - "docs/benchmark-concurrence.md"
+
+  frontend:
+    name: "Agent Développeur Frontend"
+    description: >
+      Construit l'interface utilisateur pour les apps Uprising (cofondateur AI, prospection, dashboards),
+      en Next.js/React/TypeScript avec Tailwind/Framer, responsive, accessible et optimisée pour la conversion.
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"]
+    triggers: ["nouvelle_page", "nouveau_flow", "refonte_ui", "integration_maquette"]
+    outputs:
+      - "app/*/page.tsx"
+      - "components/**/*.tsx"
+
+  backend:
+    name: "Agent Développeur Backend"
+    description: >
+      Implémente la logique métier (MVPs de prospection, cofondateur AI, dashboards trading),
+      les APIs, l'authentification et les intégrations externes en s'appuyant sur Supabase
+      (DB, Auth, Realtime, Edge Functions) et éventuellement du Python.
+    stack: ["Supabase", "PostgreSQL", "Edge Functions", "Python"]
+    triggers: ["schema_db", "api_rest", "integration_saas", "auth", "rules_rls"]
+    outputs:
+      - "supabase/**"
+      - "functions/**"
+      - "docs/schema-bd.md"
+
+  testeur:
+    name: "Agent Testeur"
+    description: >
+      Conçoit et exécute les tests unitaires et d'intégration, réalise des audits SEO et de performances
+      pour garantir la qualité des apps agency (landing pages, funnels, apps full-stack).
+    tools: ["Jest", "Vitest", "Playwright", "Lighthouse"]
+    triggers: ["avant_merge", "pre_release", "regression", "audit_seo"]
+    outputs:
+      - "tests/**/*"
+      - "docs/rapport-tests.md"
+      - "docs/audit-seo-perf.md"
+
+  deployeur:
+    name: "Agent Déployeur"
+    description: >
+      Gère les déploiements Vercel, la configuration GitHub (CI/CD) et les premiers garde-fous de monitoring
+      pour les MVPs et produits Uprising Studio, avec un focus sur la simplicité et la rapidité de mise en prod.
+    tools: ["GitHub Actions", "Vercel CLI"]
+    triggers: ["mise_en_prod", "pipeline_cicd", "rollback", "preview_env"]
+    outputs:
+      - ".github/workflows/*.yml"
+      - "docs/deploiement.md"
+

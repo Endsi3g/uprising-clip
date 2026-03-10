@@ -4,6 +4,7 @@ Alternative **open-source et gratuite** à Opus Clip : transformez vos vidéos l
 
 - **Stack** : Next.js (TypeScript), Supabase (Auth, DB, Storage), worker Python (Whisper, LLM, FFmpeg).
 - **Design** : UI type Opus Clip (sidebar, topbar, thème sombre). Voir `docs/Design System – Clone UI Opus Clip.txt`.
+- **Sources vidéo** : téléchargement d’un fichier (MP4) ou **lien** (Instagram, Facebook, LinkedIn, Google Drive, autre). Les clips rendus sont **téléchargeables** depuis la page projet.
 
 ---
 
@@ -21,8 +22,8 @@ Alternative **open-source et gratuite** à Opus Clip : transformez vos vidéos l
 ### 1. Cloner et variables d’environnement
 
 ```bash
-git clone <url-du-repo>
-cd "Uprising Content Engine (Opus Clip)"
+git clone https://github.com/Endsi3g/uprising-clip.git
+cd uprising-clip
 ```
 
 **Frontend** (`content-engine-web`) :
